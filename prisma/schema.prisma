@@ -79,5 +79,5 @@ model subscribers  {
 model policies{
   id Int @id @default(autoincrement())
   long_des String @db.LongText
-  type String @db.VarChar(100)
+  type String @db.VarChar(50)
 }
