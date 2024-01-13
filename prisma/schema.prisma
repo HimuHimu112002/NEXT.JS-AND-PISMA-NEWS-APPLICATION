@@ -45,6 +45,7 @@ model comments {
   id                Int @id @default(autoincrement())
   userID            Int
   postID            Int
+  des               String @db.LongText
   users users @relation(fields: [userID], references: [id], onDelete: Restrict, onUpdate: Cascade)
   news_list news_list @relation(fields: [postID], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
