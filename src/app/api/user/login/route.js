@@ -10,7 +10,7 @@ export async function POST(req,res) {
         const result=await prisma.users.findUnique({where:reqBody})
 
         if(!'id' in result){
-            return  NextResponse.json({status:"fail",data:result})
+            return  NextResponse.json({status:"success",data:result})
         }else {
             let token =await CreateToken(result['email'],result['id'],result['firstName'])
             const expirationDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
@@ -19,7 +19,7 @@ export async function POST(req,res) {
         }
     }
     catch (e) {
-        return  NextResponse.json({status:"fail error",data:e})
+        return  NextResponse.json({status:"fail error",data:e.toString()})
     }
 }
 
