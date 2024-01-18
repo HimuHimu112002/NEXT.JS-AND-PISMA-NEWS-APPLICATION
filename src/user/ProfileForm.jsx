@@ -1,71 +1,99 @@
 "use client"
-import React, {Fragment,useRef} from "react";
-import {Navbar} from "react-bootstrap";
-import Link from "next/link";
-import {usePathname} from "next/navigation";
-import UserDropDown from "@/components/Master/UserDropDown";
-import {Toaster} from "react-hot-toast";
+import {useEffect, useState} from "react";
+import {ErrorToast, IsEmail, IsEmpty, SuccessToast} from "@/utility/FormHelper";
+import SubmitButton from "@/components/master/SubmitButton";
+import {useRouter} from "next/navigation";
+
 const ProfileForm = (props) => {
-let contentRef,sideNavRef=useRef();
-let current=usePathname();
-let currentPath=usePathname();
-let title="HOME";
-if(currentPath==="/"){
-title="HOME";
-}
-const MenuBarClickHandler = () => {
-let sideNav = sideNavRef;
-let content = contentRef;
-if (sideNav.classList.contains("side-nav-open")) {
-sideNav.classList.add("side-nav-close");
-sideNav.classList.remove("side-nav-open");
-content.classList.add("content-expand");
-content.classList.remove("content");
-} else {
-sideNav.classList.remove("side-nav-close");
-sideNav.classList.add("side-nav-open");
-content.classList.remove("content-expand");
-content.classList.add("content");
-}
-};
-return (
-<>
-    <div ref={(div) =>{sideNavRef=div}} className="side-nav-open">
-        <img className="side-nav-logo" src="/images/logo_white1.svg"/>
-        <Link href="/" className={current==="/" ? "side-bar-item-active side-bar-item mt-2" : "side-bar-item mt-2"}>
+    const [data, setData] = useState({firstName:"",lastName:"",email:"",mobile:"",password:""});
+    const [submit, setSubmit] = useState(false);
+    const router=useRouter();
+    // useEffect(() => {
+    //     setData(props.propData);
+    // }, []);
 
-            <img className="w-8" src="/images/house.svg" alt=""/>
-            <span className="mx-2 side-bar-item-caption">Home</span>
-        </Link>
+    const inputOnChange = (name,value) => {
+        setData((data)=>({
+            ...data,
+            [name]:value
+        }))
+    }
+    const formSubmit = async (e) => {
+        e.preventDefault();
+        if (IsEmpty(data.firstName)) {
+            ErrorToast("First Name Required")
+        } else if (IsEmpty(data.lastName)) {
+            ErrorToast("Last Name Required")
+        } else if (IsEmpty(data.mobile)) {
+            ErrorToast("Mobile No Required")
+        } else if (IsEmail(data.email)) {
+            ErrorToast("Valid Email Address Required")
+        } else if (IsEmpty(data.password)) {
+            ErrorToast("Password Required")
+        } else {
+            setSubmit(true)
+            const options = {
+                method: 'PUT',
+                headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            }
+            let res = await fetch("/api/profile", options);
+            let ResJson = await res.json();
+            setSubmit(false);
+            if (ResJson['status'] === "success") {
+                SuccessToast("Update Success")
+                router.refresh()
+            } else {
+                ErrorToast("Request Fail")
+            }
 
-        <Link className={current==="/profile"?"side-bar-item-active side-bar-item mt-2" :"sidebar-item mt-2"} href="/profile" >
-        <img className="w-8" src="/images/person-bounding-box.svg" alt=""/>
-        <span className="mx-2 side-bar-item-caption">Profile</span>
-        </Link>
+        }
+    }
 
-        <Link className={current==="/comments"?"side-bar-item-active side-bar-item mt-2" :"sidebar-item mt-2"} href="/comments" >
-        <img className="w-8" src="/images/file-earmark-text.svg" alt=""/>
-        <span className="mx-2 side-bar-item-caption">Comments</span>
-        </Link>
+    return (
+        <form onSubmit={formSubmit}>
+            <div className="row h-100">
 
-    </div>
+                <div className="col-md-12 col-lg-12 col-sm-12 col-12 ">
 
-    <div ref={(div) => contentRef = div} className="content">
-        <Navbar className="px-0 bg-white shadow-sm sticky-top">
-            <div className="container-fluid">
-            <Navbar.Brand >
-            <span className="icon-nav m-0 h5" onClick={MenuBarClickHandler}>
-            <i className="bi bi-list"></i>
-            </span>
-            <span className="mx-2 f-16">{title}</span>
-            </Navbar.Brand>
-            <UserDropDown/>
+                    <div className="card container animated fadeIn p-5 gradient-bg">
+                        <h5 className="mb-3">Profile</h5>
+
+                        <div className="row">
+                        <div className="col-md-4 col-lg-4 col-sm-12 p-2 col-12">
+                            <label className="form-label">First Name</label>
+                            <input value={data.firstName} onChange={(e)=>{inputOnChange("firstName",e.target.value)}} type="text" className="form-control mb-2"/>
+                        </div>
+                        <div className="col-md-4 col-lg-4 col-sm-12 p-2 col-12">
+                            <label className="form-label">Last Name</label>
+                            <input value={data.lastName} onChange={(e)=>{inputOnChange("lastName",e.target.value)}} type="text" className="form-control mb-2"/>
+                        </div>
+                        <div className="col-md-4 col-lg-4 col-sm-12 p-2 col-12">
+                            <label className="form-label">Mobile</label>
+                            <input value={data.mobile} onChange={(e)=>{inputOnChange("mobile",e.target.value)}} type="text" className="form-control mb-2"/>
+                        </div>
+                        <div className="col-md-4 col-lg-4 col-sm-12 p-2 col-12">
+                            <label className="form-label">Email</label>
+                            <input value={data.email}  onChange={(e)=>{inputOnChange("email",e.target.value)}} type="email" className="form-control mb-2"/>
+                        </div>
+                        <div className="col-md-4 col-lg-4 col-sm-12 p-2 col-12">
+                            <label className="form-label">Password</label>
+                            <input value={data.password}  onChange={(e)=>{inputOnChange("password",e.target.value)}} type="password" className="form-control mb-2"/>
+                        </div>
+                    </div>
+
+                        <div className="row">
+                            <div className="col-md-4 col-lg-4 col-sm-12 p-2 col-12">
+                                <SubmitButton className="btn btn-danger w-100 mt-3" submit={submit} text="Update"/>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+
+                </div>
             </div>
-        </Navbar>
-        <div className="p-3">{props.children}</div>
-        <Toaster position="bottom-center"/>
-    </div>
-</>
-);
+        </form>
+    );
 };
 export default ProfileForm;

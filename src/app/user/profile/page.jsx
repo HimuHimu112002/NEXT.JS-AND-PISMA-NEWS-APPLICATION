@@ -4,7 +4,7 @@ import PlainLayout from '@/components/master/Plain-Layout'
 const page = () => {
   return (
     <PlainLayout>
-
+      <ProfileForm/>
         
     </PlainLayout>
   )

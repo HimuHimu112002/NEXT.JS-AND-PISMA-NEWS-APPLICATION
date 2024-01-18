@@ -12,17 +12,9 @@ const AppNavBar = (props) => {
                 <div className="container">
                     <div className="row justify-content-between">
                         <div className="col-md-4">
-                            <h6><i className="bi bi-calendar2-check"></i>  Today:<span> {new Date().getDay()}/{new Date().getDate()}/{new Date().getFullYear()} </span></h6>
+                            <h6><i className="bi bi-calendar2-check"></i>  Today:<span> {new Date().getMonth()+1}/{new Date().getDate()}/{new Date().getFullYear()} </span></h6>
                         </div>
-                        <div className="col-md-4">
-                            <span className="float-end">
-                            <a target="_blank" className="text-white" href={""}><i className="mx-2 bi bifacebook"></i></a>
-                            <a target="_blank" className="text-white" href={""}><i className="mx-2 bi biyoutube"></i></a>
-                            <a target="_blank" className="text-white" href={""}><i className="mx-2 bi bi bitwitter"></i></a>
-                            <a target="_blank" className="text-white" href={""}><i className="mx-2 bi bilinkedin"></i></a>
-                            </span>
-                        </div>
-
+                        
                         <div className="col-md-4">
                             <span className="float-end">
                             <a target="_blank" className="text-white" href={props.data['socials'][0]['facebook']}><i className="mx-2 bi bi-facebook"></i></a>
@@ -46,7 +38,7 @@ const AppNavBar = (props) => {
                             <Link className="nav-link f-13" href="/">Home</Link>
                             {
                                props.data['categories'].map((item,i)=>{
-                                   return <Link key={i} className="nav-link f-13"  href={`/category?id=${item['id']}`} >{item['name']}</Link>
+                                   return <Link key={i} className="nav-link f-13"  href={`/category?id=${item['id']}`} >{item.name}</Link>
                                })
                             }
                         </Nav>
