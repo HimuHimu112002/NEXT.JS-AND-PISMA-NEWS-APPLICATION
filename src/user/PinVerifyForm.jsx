@@ -1,11 +1,12 @@
 "use client"
 import {useState} from "react";
-import {ErrorToast,IsEmpty} from "@/utility/FormHelper";
+import {ErrorToast, IsEmail, IsEmpty, SetEmail, SuccessToast} from "@/utility/FormHelper";
 import SubmitButton from "@/components/master/SubmitButton";
+import { useRouter } from "next/navigation";
 
 const PinVerifyForm = () => {
+    let router = useRouter()
     const [data, setData] = useState({email:"",otp:""});
-    console.log(data.email)
     const [submit, setSubmit] = useState(false);
     const inputOnChange = (name,value) => {
         setData((data)=>({
@@ -17,8 +18,6 @@ const PinVerifyForm = () => {
       e.preventDefault();
       if(IsEmpty(data.email)){
           ErrorToast("Valid Email Required")
-      }else if(data.otp){
-        ErrorToast("Valid PIN Code Required")
       }
       else{
           setSubmit(true)
@@ -36,7 +35,7 @@ const PinVerifyForm = () => {
         setSubmit(false);
 
         if(ResJson['status']==="success"){
-            SuccessToast("Valid Email Success")
+            SuccessToast("Otp Verify Success")
             router.replace("/user/resetPassword")
 
         }

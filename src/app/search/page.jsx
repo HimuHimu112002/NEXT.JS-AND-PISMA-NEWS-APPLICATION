@@ -1,20 +1,21 @@
-import React from 'react';
+import React from 'react'
+
 import PlainLayout from "@/components/master/Plain-Layout";
 import NewsList from "@/components/news/NewsList";
 import PopularList from "@/components/news/PopularList";
 
-async function getData(id){
-    let News= (await (await fetch(`${process.env.HOST}/api/news/category?catID=${id}`)).json())['data']
-    let Popular= (await (await fetch(`${process.env.HOST}/api/news/type?type=Game`)).json())['data']
+async function getData(keywords){
+    let News = (await (await fetch(`${process.env.HOST}/api/news/search?keywords=${keywords}`)).json())['data']
+    let Popular = (await (await fetch(`${process.env.HOST}/api/news/type?type=Game`)).json())['data']
     return {News:News,Popular:Popular}
 }
 
 
-const Page = async (props) => {
-    let id=props.searchParams['id'];
-    const data=await getData(id);
+const page = async (props) => {
+    let keywords=props.searchParams['keyword'];
+    const data=await getData(keywords);
 
-    return (
+  return (
         <PlainLayout>
             <div className="container mt-4">
                 <div className="row">
@@ -27,7 +28,8 @@ const Page = async (props) => {
                 </div>
             </div>
         </PlainLayout>
-    );
-};
+  )
+}
 
-export default Page;
+export default page
+

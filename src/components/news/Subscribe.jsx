@@ -24,8 +24,8 @@ const Subscribe = () => {
             setData({email:""})
 
             res['status']==="success"?(
-                SuccessToast("Request Success")
-            ):(ErrorToast("Email Already Used ! "))
+                SuccessToast("Subscription Success")
+            ):(ErrorToast("This Email Already Used !"))
 
         }
 

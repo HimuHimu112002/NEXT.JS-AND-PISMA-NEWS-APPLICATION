@@ -11,6 +11,12 @@ class FormHelper {
     IsEmail(value) {
         return !EmailRegx.test(value);
     }
+    SetEmail(value) {
+        sessionStorage.setItem("email", value)
+    }
+    GetEmail() {
+       return sessionStorage.getItem("email")
+    }
     ErrorToast(msg) {
         toast.error(msg);
     }
@@ -18,4 +24,4 @@ class FormHelper {
         toast.success(msg);
     }
 }
-export const {IsEmpty, IsMobile, IsEmail, ErrorToast, SuccessToast} = new FormHelper();
+export const {IsEmpty, IsMobile, IsEmail, ErrorToast, SuccessToast,SetEmail,GetEmail} = new FormHelper();

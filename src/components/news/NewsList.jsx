@@ -11,10 +11,10 @@ const NewsList = (props) => {
                             <img className="card-img-top" src={item['img3']} alt="News Image"/>
                             <div className="card-body">
                                 <h6 className="card-title">{item['title']}</h6>
-                                <p>{item['short_des']}</p>
+                                {/* <p>{item['createdAt']}</p> */}
                                 
-                                <p className="my-2 fw-bold p-0"><i className="bi bi-clock"></i> 3 Days Ago</p>
-                                <Link href={`/details?id=${item['id']}`} className="btn mt-2 btn-sm btn-outline-danger">Read More</Link>
+                                <p className="my-2 fw-bold p-0"><i className="bi bi-clock"></i> {item['createdAt']}</p>
+                                <Link href={`/details?id=${item['id']}`} className="btn mt-2 btn-sm btn-outline-success">Read More</Link>
                             </div>
                         </div>
                     </div>

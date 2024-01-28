@@ -8,7 +8,7 @@ const AppNavBar = (props) => {
 
     return (
         <div>
-            <div className="py-2 bg-dark text-white container-fluid">
+            <div className="py-3 bg-dark text-white container-fluid">
                 <div className="container">
                     <div className="row justify-content-between">
                         <div className="col-md-4">

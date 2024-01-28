@@ -1,28 +1,24 @@
 "use client"
 import {useState} from "react";
-import {ErrorToast, IsEmail, IsEmpty, SuccessToast} from "@/utility/FormHelper";
+import {ErrorToast, IsEmail, IsEmpty, SetEmail, SuccessToast} from "@/utility/FormHelper";
 import SubmitButton from "@/components/master/SubmitButton";
-import Link from "next/link";
-
-
+import { useRouter } from "next/navigation";
 const EmailVerifyForm = () => {
-
-
+    let router = useRouter()
     let [data, setData] = useState({email:""});
     const [submit, setSubmit] = useState(false);
+
     const inputOnChange = (name,value) => {
         setData((data)=>({
             ...data,
             [name]:value
         }))
     }
+
     const formSubmit =async (e) => {
       e.preventDefault();
       if(IsEmail(data.email)){
           ErrorToast("Valid Email Address Required")
-      }
-      else if(IsEmpty(data.email)){
-          ErrorToast("Email Address Required")
       }
       else{
           setSubmit(true);
@@ -33,15 +29,15 @@ const EmailVerifyForm = () => {
               body: JSON.stringify(data)
             }
 
-          let res=await fetch("/api/user/recover",options);
+          let res = (await fetch("/api/user/recover",options));
           let ResJson=await res.json();
 
           setSubmit(false);
 
           if(ResJson['status']==="success"){
               SuccessToast("Valid Email Success")
+              SetEmail(data.email)
               router.replace("/user/otpVerify")
-            //   window.location.href="/";
           }
           else{
               ErrorToast("Request Fail")
@@ -58,17 +54,7 @@ const EmailVerifyForm = () => {
                    <h5 className="mb-3">Enter Your valid Email</h5>
                    <label className="form-label">User Email</label>
                    <input onChange={(e)=>{inputOnChange("email",e.target.value)}} type="email" className="form-control mb-2"/>
-
-                   {/* <label className="form-label">User Password</label>
-                   <input onChange={(e)=>{inputOnChange("password",e.target.value)}} type="password" className="form-control mb-1"/> */}
-
-                   <SubmitButton className="btn btn-danger mt-3" submit={submit} text="Login"/>
-
-                   {/* <div className="my-3 d-flex">
-                       <Link  className="nav-link mx-2">Sign Up |</Link>
-                       <Link href="/user/emailVerify" className="nav-link">Forget Password</Link>
-                   </div> */}
-
+                   <SubmitButton className="btn btn-danger mt-3" submit={submit} text="Email Verify"/>
                </form>
            </div>
        </div>

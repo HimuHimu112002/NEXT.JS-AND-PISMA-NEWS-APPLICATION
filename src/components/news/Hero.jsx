@@ -12,7 +12,7 @@ const Hero = (props) => {
     return (
         <div className="container section-top">
             <div className="row">
-                <div className="col-md-8 col-lg-8 col-sm-12 p-1 col-12">
+                <div className="col-md-12 col-lg-12 col-sm-12 p-1 col-12">
                     <Carousel id="carouselHero" activeIndex={index} onSelect={handleSelect} controls={false}>
                         {
                             props.slider.map((item,i)=>{
@@ -31,7 +31,7 @@ const Hero = (props) => {
                         }
                     </Carousel>
                 </div>
-                <div className="col-md-4 col-lg-4 col-sm-6 p-1 col-6">
+                {/* <div className="col-md-4 col-lg-4 col-sm-6 p-1 col-6">
                     <Link href={`/details?id=${props.featured[0]['id']}`} id='Hero' className="card h-100">
                         <img alt="" className="card-img-top w-100 rounded-2" src={props.featured[0]['img2']}/>
                         <div className="card-img-overlay d-flex align-items-end">
@@ -41,7 +41,7 @@ const Hero = (props) => {
                             </div>
                         </div>
                     </Link>
-                </div>
+                </div> */}
             </div>
         </div>
     );
