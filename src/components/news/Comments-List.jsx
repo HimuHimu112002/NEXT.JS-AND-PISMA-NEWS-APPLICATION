@@ -12,11 +12,11 @@ const CommentsList = (props) => {
                     <ul className="list-group bg-transparent list-group-flush">
                         {
                            props.data.map((item,i)=>{
-                               return  <li key={i} className="list-group-item bg-transparent">
-                                   <h6 className="text-dark">
-                                       <i className="bi bi-person-circle"></i> {item['users']['firstName']}
-                                   </h6>
-                                   <p className="text-secondary">{item['descriptions']}</p>
+                               return  <li key={i} className="list-group-item bg-transparent border-bottom mb-4">
+                                   <h3 className="text-danger">
+                                       <i className="bi bi-person-circle text-danger"></i> User Name: {item['users']['firstName']} {item['users']['lastName']}
+                                   </h3>
+                                   <h4 className="text-secondary text-bold">Comment: {item['des']}</h4>
                                </li>
                            })
                         }

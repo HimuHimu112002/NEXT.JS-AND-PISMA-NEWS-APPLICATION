@@ -2,9 +2,11 @@
 import React, {useState} from 'react';
 import {Nav, Navbar} from "react-bootstrap";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 const AppNavBar = (props) => {
     let [keyword,SetKeyword]=useState("")
+    const router = useRouter();
 
     return (
         <div>
@@ -48,8 +50,40 @@ const AppNavBar = (props) => {
                                 <Link href={keyword===""?("/"):(`/search?keyword=${keyword}`)} className="btn btn-danger" type="button"><i className="bi bi-search"></i></Link>
                             </div>
                         </div>
+
+                        {
+                            props.isLogin?(
+                                <>
+                                    <div className='float-right mx-4 h-auto d-flex'>
+                                        <div className='user-dropdown'>
+                                            <img className='icon-nav-img icon-nav' src='/images/profile.png' alt='img'></img>
+                                            <div className='user-dropdown-content'>
+                                                <div className='mt-4 text-center'>
+                                                    <img className='icon-nav-img icon-nav' src='/images/profile.png' alt='img'></img>
+                                                    <hr className='user-dropdown-divider p-0'></hr>
+                                                </div>
+                                                <Link href="/profile" className='side-bar-item'>
+                                                    <span className='side-bar-item-caption'>profile</span>
+                                                </Link>
+                                                <Link href="/comments" className='side-bar-item'>
+                                                    <span className='side-bar-item-caption'>comments</span>
+                                                </Link>
+                                                <a href="/api/user/login" className='side-bar-item'>
+                                                    <span className='side-bar-item-caption'>logout</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
+                            ):(
+                                <>
+
+                                    <Link href="/user/login" className="btn ms-3 btn-outline-danger">Login</Link>
+                                </>
+                            )
+                        }
                         <>
-                            <Link href="/user/login" className="btn ms-3 btn-outline-danger">Login</Link>
+                            
                         </>
                     </Navbar.Collapse>
                 </div>

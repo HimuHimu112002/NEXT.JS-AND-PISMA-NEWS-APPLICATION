@@ -25,6 +25,9 @@ export async function POST(req,res) {
 
 export async function GET(req,res) {
     const expirationDate = new Date(Date.now() - 24 * 60 * 60 * 1000);
-    const cookieString = `token=${""}; expires=${expirationDate}; path=/`;
-    return NextResponse.json({status:"success",data:""}, {status:200,headers:{'set-cookie':cookieString}})
+    const response = NextResponse.redirect(new URL('/', req.url), 303)
+    response.cookies.set('token', '',{ expires: expirationDate})
+    //const cookieString = `token=${""}; expires=${expirationDate}; path=/`;
+    //return NextResponse.json({status:"success",data:""}, {status:200,headers:{'set-cookie':cookieString}})
+    return response
 }

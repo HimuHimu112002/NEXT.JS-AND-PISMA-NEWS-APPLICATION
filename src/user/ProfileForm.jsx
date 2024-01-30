@@ -37,8 +37,9 @@ const ProfileForm = (props) => {
                 headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
             }
-            let res = await fetch("/api/profile", options);
+            let res = await fetch("/api/profile/update", options);
             let ResJson = await res.json();
+            
             setSubmit(false);
             if (ResJson['status'] === "success") {
                 SuccessToast("Update Success")
@@ -52,7 +53,7 @@ const ProfileForm = (props) => {
 
     return (
         <form onSubmit={formSubmit}>
-            <div className="row h-100">
+            <div className="row h-100 mt-5">
 
                 <div className="col-md-12 col-lg-12 col-sm-12 col-12 ">
 
