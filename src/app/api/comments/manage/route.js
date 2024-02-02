@@ -26,7 +26,7 @@ export async function GET(req, res){
         const prisma = new PrismaClient()
         let result = await prisma.comments.findMany(
             {
-                where:{userID:id },
+                where:{userID:id},
                 include:{
                     news_list:{select:{title:true}}
                 }

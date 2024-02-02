@@ -34,13 +34,14 @@ const LoginForm = () => {
             }
 
           let res=await fetch("/api/user/login",options);
+          console.log("gg",res)
           let ResJson=await res.json();
 
           setSubmit(false);
 
           if(ResJson['status']==="success"){
               SuccessToast("Login Success")
-              window.location.href="/";
+             window.location.href="/";
           }
           else{
               ErrorToast("Request Fail")

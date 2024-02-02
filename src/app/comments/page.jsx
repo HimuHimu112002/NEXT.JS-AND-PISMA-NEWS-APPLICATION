@@ -1,10 +1,22 @@
 import PlainLayout from '@/components/master/Plain-Layout';
+import UserComments from '@/components/news/UserComments';
+import { cookies } from 'next/headers';
 import React from 'react';
 
-const Page = () => {
+async function getData(cookies){
+    let option = {method: 'GET', headers:{'Cookie':cookies}, cache: 'no-store'}
+    let headers ={
+        'id': 1
+    }
+    let Comments = (await (await fetch(`${process.env.HOST}/api/comments/manage`,{headers})).json())['data']
+    return {Comments:Comments}
+}
+const Page = async () => {
+    const cookieStore = cookies();
+    const data = await getData();
     return (
         <PlainLayout>
-            <h1 className='text-center py-4'>User Comments List</h1>
+            <UserComments data={data['Comments']}/>
         </PlainLayout>
     );
 };

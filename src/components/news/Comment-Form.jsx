@@ -7,8 +7,9 @@ import { useRouter } from "next/navigation";
 const CommentForm = (props) => {
     //let router = useRouter()
     let [data, setData] = useState({postID:parseInt(props.postID), des:""});
+
     const [submit, setSubmit] = useState(false);
-    console.log(props.postID)
+    console.log("fff",props.postID)
     const inputOnChange = (name,value) => {
         setData((data)=>({
             ...data,

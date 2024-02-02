@@ -8,6 +8,7 @@ const ProfileForm = (props) => {
     const [data, setData] = useState({firstName:"",lastName:"",email:"",mobile:"",password:""});
     const [submit, setSubmit] = useState(false);
     const router=useRouter();
+    
     // useEffect(() => {
     //     setData(props.propData);
     // }, []);
@@ -33,11 +34,11 @@ const ProfileForm = (props) => {
         } else {
             setSubmit(true)
             const options = {
-                method: 'PUT',
+                method: 'POST',
                 headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
             }
-            let res = await fetch("/api/profile/update", options);
+            let res = await fetch("/api/user/profile/update", options);
             let ResJson = await res.json();
             
             setSubmit(false);
